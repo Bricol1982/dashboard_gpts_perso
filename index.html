@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord des GPTs personnalisés</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Tableau de bord des GPTs personnalisés</h1>
+
+    <!-- Barre de recherche -->
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Rechercher un GPT..." onkeyup="searchGPTs()">
+    </div>
+
+    <!-- Boutons de bascule -->
+    <div class="button-group">
+        <button class="theme-toggle" onclick="toggleTheme()">Basculer en mode sombre</button>
+        <button class="view-toggle" onclick="toggleView()">Afficher en Liste</button>
+        <button class="detail-toggle" onclick="toggleDetail()">Mode Compact</button>
+    </div>
+
+    <!-- Filtre de catégorie -->
+    <div class="category-filter">
+        <label for="categoryFilter">Filtrer par catégorie :</label>
+        <select id="categoryFilter" onchange="filterByCategory()">
+            <option value="all">Toutes les catégories</option>
+            <option value="AWS">AWS</option>
+            <option value="Browser">Browser</option>
+            <option value="Coding">Coding</option>
+            <option value="System">System</option>
+            <option value="Language">Language</option>
+            <option value="Programming">Programming</option>
+            <option value="Cooking">Cooking</option>
+        </select>
+    </div>
+
+    <!-- Affichage en liste -->
+    <table id="gptTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Nom du GPT</th>
+                <th onclick="sortTable(1)">Catégorie</th>
+                <th>Description</th>
+                <th>Lien</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Tous les GPTs en mode liste -->
+            <tr data-category="Browser"><td>ChatGPT Search</td><td>Browser</td><td>Search by ChatGPT</td><td><a href="https://chatgpt.com/?hints=search" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Browser"><td>ChatGPT 4o</td><td>Browser</td><td>Idéal pour la plupart des tâches</td><td><a href="https://chatgpt.com/?model=gpt-4o" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Browser"><td>Browser Pro</td><td>Browser</td><td>Top browser expert! Provide 3X accurate responses.</td><td><a href="https://chatgpt.com/g/g-BlafpMvzd-browser-pro" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Browser"><td>Web Browser</td><td>Browser</td><td>Je peux naviguer sur le web pour vous aider à trouver des informations.</td><td><a href="https://chatgpt.com/g/g-xc7kwwGjB-web-browser" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="System"><td>Fedora</td><td>System</td><td>Swift and accurate Fedora Linux and GNOME assistant.</td><td><a href="https://chatgpt.com/g/g-uYAPPRYkt-fedora" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Language"><td>Traducteur anglais français</td><td>Language</td><td>Traducteur de langues en Français - Anglais et Anglais - Français.</td><td><a href="https://chatgpt.com/g/g-g0Y85t1Vj-traducteur-anglais-francais" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Language"><td>Reformulation De Texte</td><td>Language</td><td>Reformulez vos textes avec notre outil de reformulation, qui assure une écriture variée tout en conservant le sens initial.</td><td><a href="https://chatgpt.com/g/g-SMrZAgAKc-reformulation-de-texte" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Cooking"><td>Recette cuisine</td><td>Cooking</td><td>Recette selon préférence, selon budget, selon ce qu'il y a dans le frigo.</td><td><a href="https://chatgpt.com/g/g-0PEdOfWcg-recette-cuisine" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Gaming"><td>PokemongoGPT</td><td>Gaming</td><td>PokéGuide: Your go-to for Pokémon Go tips, events, and strategies!</td><td><a href="https://chatgpt.com/g/g-gw8ffivRc-pokemongogpt" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Gaming"><td>WampaBot</td><td>Gaming</td><td>Delivers detailed SWGOH GAC analysis, focusing on key performance metrics.</td><td><a href="https://chatgpt.com/g/g-MJBfUx7pR-wampabot" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Coding"><td>Code Copilot</td><td>Coding</td><td>Code Smarter, Build Faster—With the Expertise of a 10x Programmer by Your Side.</td><td><a href="https://chatgpt.com/g/g-2DQzU5UZl-code-copilot" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Coding"><td>Grimoire</td><td>Coding</td><td>Code Wizard.</td><td><a href="https://chatgpt.com/g/g-n7Rs0IK86-grimoire" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Coding"><td>Code</td><td>Coding</td><td>Reviews code, generates and optimizes functions, writes tests, and adds comments for existing code.</td><td><a href="https://chatgpt.com/g/g-k3IqoCe1l-code" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Coding"><td>Code GPT</td><td>Coding</td><td>The world's most powerful coding assistant Python JS HTML CSS.</td><td><a href="https://chatgpt.com/g/g-cksUvVWar-code-gpt-python-java-c-html-javascript-more" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Coding"><td>Python</td><td>Coding</td><td>A highly sophisticated GPT tailored for Python.</td><td><a href="https://chatgpt.com/g/g-cKXjWStaE-python" target="_blank">Ouvrir</a></td></tr>
+            <tr data-category="Coding"><td>App Builder</td><td>Coding</td><td>Builds simple web apps with OpenAI APIs for beginners.</td><td><a href="https://chatgpt.com/g/g-Th6nv2nQQ-app-builder" target="_blank">Ouvrir</a></td></tr>
+            <!-- Ajoutez d'autres GPTs ici -->
+        </tbody>
+    </table>
+
+    <!-- Affichage en cartes -->
+    <div id="cardContainer" class="card-container">
+        <div class="card" data-category="Browser"><div class="card-title">ChatGPT Search</div><div class="card-category">Browser</div><div class="card-description">Search by ChatGPT</div><a href="https://chatgpt.com/?hints=search" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Browser"><div class="card-title">ChatGPT 4o</div><div class="card-category">Browser</div><div class="card-description">Idéal pour la plupart des tâches</div><a href="https://chatgpt.com/?model=gpt-4o" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Browser"><div class="card-title">Browser Pro</div><div class="card-category">Browser</div><div class="card-description">Top browser expert! Provide 3X accurate responses.</div><a href="https://chatgpt.com/g/g-BlafpMvzd-browser-pro" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Browser"><div class="card-title">Web Browser</div><div class="card-category">Browser</div><div class="card-description">Je peux naviguer sur le web pour vous aider à trouver des informations.</div><a href="https://chatgpt.com/g/g-xc7kwwGjB-web-browser" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="System"><div class="card-title">Fedora</div><div class="card-category">System</div><div class="card-description">Swift and accurate Fedora Linux and GNOME assistant.</div><a href="https://chatgpt.com/g/g-uYAPPRYkt-fedora" target="_blank">Ouvrir</a></div> 
+        <div class="card" data-category="Language"><div class="card-title">Traducteur anglais français</div><div class="card-category">Language</div><div class="card-description">Traducteur de langues en Français - Anglais et Anglais - Français.</div><a href="https://chatgpt.com/g/g-g0Y85t1Vj-traducteur-anglais-francais" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Language"><div class="card-title">Reformulation De Texte</div><div class="card-category">Language</div><div class="card-description">Reformulez vos textes avec notre outil de reformulation, qui assure une écriture variée tout en conservant le sens initial.</div><a href="https://chatgpt.com/g/g-SMrZAgAKc-reformulation-de-texte" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Cooking"><div class="card-title">Recette cuisine</div><div class="card-category">Cooking</div><div class="card-description">Recette selon préférence, selon budget, selon ce qu'il y a dans le frigo.</div><a href="https://chatgpt.com/g/g-0PEdOfWcg-recette-cuisine" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Gaming"><div class="card-title">PokemongoGPT</div><div class="card-category">Gaming</div><div class="card-description">PokéGuide: Your go-to for Pokémon Go tips, events, and strategies!</div><a href="https://chatgpt.com/g/g-gw8ffivRc-pokemongogpt" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Gaming"><div class="card-title">WampaBot</div><div class="card-category">Gaming</div><div class="card-description">Delivers detailed SWGOH GAC analysis, focusing on key performance metrics.</div><a href="https://chatgpt.com/g/g-MJBfUx7pR-wampabot" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Coding"><div class="card-title">Code Copilot</div><div class="card-category">Coding</div><div class="card-description">Code Smarter, Build Faster—With the Expertise of a 10x Programmer by Your Side.</div><a href="https://chatgpt.com/g/g-2DQzU5UZl-code-copilot" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Coding"><div class="card-title">Grimoire</div><div class="card-category">Coding</div><div class="card-description">Code Wizard.</div><a href="https://chatgpt.com/g/g-n7Rs0IK86-grimoire" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Coding"><div class="card-title">Code</div><div class="card-category">Coding</div><div class="card-description">Reviews code, generates and optimizes functions, writes tests, and adds comments for existing code.</div><a href="https://chatgpt.com/g/g-k3IqoCe1l-code" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Coding"><div class="card-title">Code GPT</div><div class="card-category">Coding</div><div class="card-description">The world's most powerful coding assistant Python JS HTML CSS.</div><a href="https://chatgpt.com/g/g-cksUvVWar-code-gpt-python-java-c-html-javascript-more" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Coding"><div class="card-title">Python</div><div class="card-category">Coding</div><div class="card-description">A highly sophisticated GPT tailored for Python.</div><a href="https://chatgpt.com/g/g-cKXjWStaE-python" target="_blank">Ouvrir</a></div>
+        <div class="card" data-category="Coding"><div class="card-title">App Builder</div><div class="card-category">Coding</div><div class="card-description">Builds simple web apps with OpenAI APIs for beginners.</div><a href="https://chatgpt.com/g/g-Th6nv2nQQ-app-builder" target="_blank">Ouvrir</a></div>
+        <!-- Ajoutez d'autres cartes ici -->						
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
